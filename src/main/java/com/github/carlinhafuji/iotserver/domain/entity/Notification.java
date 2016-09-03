@@ -13,4 +13,12 @@ public class Notification {
     private long id;
 
     private String message;
+
+    public Notification(String message) {
+        this.message = message;
+    }
+
+    public String getMessage() {
+        return message;
+    }
 }
