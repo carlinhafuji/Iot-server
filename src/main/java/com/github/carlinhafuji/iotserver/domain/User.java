@@ -1,4 +1,4 @@
-package com.github.carlinhafuji.iotserver.domain.entity;
+package com.github.carlinhafuji.iotserver.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -6,19 +6,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Notification {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String message;
+    private String email;
 
-    public Notification(String message) {
-        this.message = message;
+    public User(String email) {
+        this.email = email;
     }
 
-    public String getMessage() {
-        return message;
+    public String getEmail() {
+        return email;
     }
 }
