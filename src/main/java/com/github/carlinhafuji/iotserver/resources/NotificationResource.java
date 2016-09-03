@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "notification")
+@RequestMapping(path = "notifications")
 public class NotificationResource {
 
     private NotificationRepository repository;
