@@ -1,0 +1,7 @@
+{
+  "name": "iot-server",
+  "description": "This is a small application for receive requests from iot devices and send to firebase cloud message",
+  "repository": "https://github.com/carlinhafuji/Iot-server",
+  "image": "heroku/java",
+  "addons": [ "heroku-postgresql" ]
+}
