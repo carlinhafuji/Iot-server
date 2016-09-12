@@ -23,6 +23,7 @@ public class EventProcessor {
         Thing thing = thingRepository().findOne(eventData.getThingId());
 
         //Notification n = new Notification("titulo", "corpo", thing.getOwner())
+        //notificationSender().send(n);
     }
 
     private ThingRepository thingRepository() {
