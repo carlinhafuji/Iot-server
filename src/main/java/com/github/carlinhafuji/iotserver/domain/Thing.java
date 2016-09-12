@@ -4,13 +4,13 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 
-@Entity
+//@Entity
 public class Thing {
 
-    @Id
+    //@Id
     private String id;
     private String name;
-    @ManyToOne
+    //@ManyToOne
     private User owner;
 
     public Thing(String id, User owner) {
