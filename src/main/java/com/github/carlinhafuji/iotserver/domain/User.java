@@ -3,7 +3,7 @@ package com.github.carlinhafuji.iotserver.domain;
 import javax.persistence.*;
 import java.util.Set;
 
-@Entity
+@Entity(name= "application_user")
 public class User {
 
     @Id
@@ -13,7 +13,7 @@ public class User {
     @Column
     private String email;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
     private Set<Thing> things;
 
     public User() { }

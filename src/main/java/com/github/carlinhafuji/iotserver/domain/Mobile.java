@@ -17,6 +17,9 @@ public class Mobile {
     @ManyToOne
     private User owner;
 
+    public Mobile() {
+    }
+
     public Mobile(String deviceId, User owner) {
         this.deviceId = deviceId;
         this.owner = owner;
