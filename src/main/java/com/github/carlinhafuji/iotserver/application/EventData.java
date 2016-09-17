@@ -4,7 +4,7 @@ import java.util.Map;
 
 public class EventData {
 
-    private String thingId;
+    private Long thingId;
     private Map<String, String> params;
 
     public Map<String, String> getParams() {
@@ -13,10 +13,10 @@ public class EventData {
     public void setParams(Map<String, String> params) {
         this.params = params;
     }
-    public String getThingId() {
+    public Long getThingId() {
         return thingId;
     }
-    public void setThingId(String thingId) {
+    public void setThingId(Long thingId) {
         this.thingId = thingId;
     }
 }

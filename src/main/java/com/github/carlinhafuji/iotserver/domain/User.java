@@ -16,17 +16,20 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
     private Set<Thing> things;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+    private Set<Mobile> mobiles;
+
     public User() { }
 
     public User(String email) {
         this.email = email;
     }
 
-    public String getEmail() {
+    public String email() {
         return email;
     }
 
-    public Long getId() {
+    public Long id() {
         return id;
     }
 
@@ -34,9 +37,21 @@ public class User {
         return things;
     }
 
+    public Set<Mobile> mobiles() {
+        return mobiles;
+    }
+
     public void addThing(Thing thing) {
-        if (this.equals(thing.getOwner())) {
+        if (this.equals(thing.owner())) {
             things.add(thing);
+        } else {
+            throw new IllegalArgumentException("");
+        }
+    }
+
+    public void addMobile(Mobile mobile) {
+        if (this.equals(mobile.owner())) {
+            mobiles.add(mobile);
         } else {
             throw new IllegalArgumentException("");
         }

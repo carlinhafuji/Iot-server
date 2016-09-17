@@ -9,7 +9,7 @@ public class Mobile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @NotEmpty
     private String deviceId;
@@ -25,11 +25,15 @@ public class Mobile {
         this.owner = owner;
     }
 
-    public String getDeviceId() {
+    public String deviceId() {
         return deviceId;
     }
 
-    public User getOwner() {
+    public User owner() {
         return owner;
+    }
+
+    public Long id() {
+        return id;
     }
 }

@@ -3,6 +3,7 @@ package com.github.carlinhafuji.iotserver.resources.model;
 public class ThingModel {
 
     private String name;
+    private String type;
 
     public String getName() {
         return name;
@@ -11,4 +12,10 @@ public class ThingModel {
         this.name = name;
     }
 
+    public String getType() {
+        return type;
+    }
+    public void setType(String type) {
+        this.type = type;
+    }
 }
