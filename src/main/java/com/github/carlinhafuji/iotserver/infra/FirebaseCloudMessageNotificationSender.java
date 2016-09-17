@@ -5,19 +5,21 @@ import com.github.carlinhafuji.iotserver.domain.notification.Notification;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Service
 public class FirebaseCloudMessageNotificationSender implements NotificationSender {
 
     private RestTemplate restTemplate;
 
-    @Autowired
+    /*@Autowired
     public FirebaseCloudMessageNotificationSender(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
-    }
+    }*/
 
     private RestTemplate restTemplate() {
         return restTemplate;
