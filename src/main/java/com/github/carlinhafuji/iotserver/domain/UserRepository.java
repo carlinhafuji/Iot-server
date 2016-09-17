@@ -1,7 +1,9 @@
 package com.github.carlinhafuji.iotserver.domain;
 
-
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ThingRepository extends JpaRepository<Thing, String> {
+/**
+ * Created by carlosmendes on 9/17/16.
+ */
+public interface UserRepository extends JpaRepository<User, Long> {
 }

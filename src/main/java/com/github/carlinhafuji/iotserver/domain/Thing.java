@@ -1,20 +1,25 @@
 package com.github.carlinhafuji.iotserver.domain;
 
+import org.hibernate.annotations.Generated;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 
-//@Entity
+@Entity
 public class Thing {
 
-    //@Id
-    private String id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column
     private String name;
-    //@ManyToOne
+    @ManyToOne
     private User owner;
 
-    public Thing(String id, User owner) {
-        this.id = id;
+    public Thing() { }
+
+    public Thing(String name, User owner) {
+        this.name = name;
         this.owner = owner;
     }
 
@@ -27,5 +32,9 @@ public class Thing {
 
     public User getOwner() {
         return owner;
+    }
+
+    public Long getId() {
+        return id;
     }
 }
