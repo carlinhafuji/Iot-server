@@ -27,7 +27,12 @@ public class UsersResource {
     public ResponseEntity<Void> postUsers(
             @RequestBody UserModel userModel,
             UriComponentsBuilder uriBuilder) {
-        User user = userRepository().save(new User(userModel.getEmail()));
+
+        User user = userRepository().findByEmail(userModel.getEmail());
+        if (user == null) {
+            user = userRepository().save(new User(userModel.getEmail()));
+        }
+
         URI createdUri = uriBuilder.path("users/{id}").buildAndExpand(user.id()).toUri();
         return ResponseEntity.created(createdUri).build();
     }
@@ -69,15 +74,13 @@ public class UsersResource {
             return ResponseEntity.notFound().build();
         }
 
-        Mobile mobile = new Mobile(model.getDeviceId(), owner);
+        Mobile mobile = new Mobile(model.getToken(), owner);
         owner.addMobile(mobile);
         userRepository().save(owner);
 
-        URI createdUri = uriBuilder.path("users/{userId}/mobiles/{thingId}").buildAndExpand(id, mobile.id()).toUri();
+        URI createdUri = uriBuilder.path("users/{userId}/mobiles/{mobileId}").buildAndExpand(id, mobile.id()).toUri();
         return ResponseEntity.created(createdUri).build();
     }
-
-
 
     private UserRepository userRepository() {
         return userRepository;

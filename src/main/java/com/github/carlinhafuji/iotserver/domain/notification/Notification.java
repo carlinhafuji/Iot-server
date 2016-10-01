@@ -14,15 +14,15 @@ public class Notification {
         this.recipient = recipient;
     }
 
-    public String getTitle() {
+    public String title() {
         return title;
     }
 
-    public String getBody() {
+    public String body() {
         return body;
     }
 
-    public Mobile getRecipient() {
+    public Mobile recipient() {
         return recipient;
     }
 }

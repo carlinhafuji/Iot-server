@@ -12,7 +12,7 @@ public class Mobile {
     private Long id;
 
     @NotEmpty
-    private String deviceId;
+    private String token;
 
     @ManyToOne
     private User owner;
@@ -20,13 +20,9 @@ public class Mobile {
     public Mobile() {
     }
 
-    public Mobile(String deviceId, User owner) {
-        this.deviceId = deviceId;
+    public Mobile(String token, User owner) {
+        this.token = token;
         this.owner = owner;
-    }
-
-    public String deviceId() {
-        return deviceId;
     }
 
     public User owner() {
@@ -35,5 +31,9 @@ public class Mobile {
 
     public Long id() {
         return id;
+    }
+
+    public String token() {
+        return token;
     }
 }

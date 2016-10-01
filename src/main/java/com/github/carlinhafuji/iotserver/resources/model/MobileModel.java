@@ -1,7 +1,7 @@
 package com.github.carlinhafuji.iotserver.resources.model;
 
 public class MobileModel {
-    private String deviceId;
+    private String token;
     private String owner;
 
     public String getOwner() {
@@ -11,10 +11,10 @@ public class MobileModel {
         this.owner = owner;
     }
 
-    public String getDeviceId() {
-        return deviceId;
+    public String getToken() {
+        return token;
     }
-    public void setDeviceId(String deviceId) {
-        this.deviceId = deviceId;
+    public void setToken(String token) {
+        this.token = token;
     }
 }

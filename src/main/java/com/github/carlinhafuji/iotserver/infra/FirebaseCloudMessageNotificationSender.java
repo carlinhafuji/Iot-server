@@ -1,29 +1,21 @@
 package com.github.carlinhafuji.iotserver.infra;
 
-import com.github.carlinhafuji.iotserver.domain.notification.NotificationSender;
 import com.github.carlinhafuji.iotserver.domain.notification.Notification;
+import com.github.carlinhafuji.iotserver.domain.notification.NotificationSender;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Scanner;
 
 @Service
 public class FirebaseCloudMessageNotificationSender implements NotificationSender {
-
-    private RestTemplate restTemplate;
-
-    /*@Autowired
-    public FirebaseCloudMessageNotificationSender(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
-    }*/
-
-    private RestTemplate restTemplate() {
-        return restTemplate;
-    }
 
     public String url() {
         return System.getenv("FCM_URL");
@@ -35,21 +27,52 @@ public class FirebaseCloudMessageNotificationSender implements NotificationSende
 
     @Override
     public void send(Notification notification) {
-        Map<String, String> headers = new HashMap<>();
-        headers.put("Authorization", "key=" + apiKey());
-        headers.put("Content-Type","application/json");
+        try {
+            URL url = new URL(url());
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Authorization", "key=" + apiKey());
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setDoOutput(true);
 
-        restTemplate.postForEntity(url(), getPayload(notification), Object.class, headers);
+            OutputStream outputStream = conn.getOutputStream();
+            outputStream.write(getPayload(notification).getBytes());
+
+            /*TODO Implement ExponencialBackoff*/
+            /*TODO Validate if message was sent successfully*/
+            InputStream inputStream = conn.getInputStream();
+            final String resp = convertStreamToString(inputStream);
+            System.out.println(resp);
+            /* --- */
+        } catch (JSONException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private String convertStreamToString(InputStream is) {
+        Scanner s = new Scanner(is).useDelimiter("\\A");
+        return s.hasNext() ? s.next().replace(",", ",\n") : "";
     }
 
-    private JSONObject getPayload(Notification notification) {
-        JSONObject info = new JSONObject();
-        info.put("title", notification.getTitle());
-        info.put("body", notification.getBody());
-
+    private String getPayload(Notification notification) {
         JSONObject payload = new JSONObject();
-        payload.put("to", notification.getRecipient().getDeviceId());
-        payload.put("notification", info);
-        return payload;
+        JSONObject jNotification = new JSONObject();
+        JSONObject jData = new JSONObject();
+
+        jNotification.put("title", notification.title());
+        jNotification.put("body", notification.body());
+        jNotification.put("sound", "default");
+        jNotification.put("badge", "1");
+        jNotification.put("click_action", "OPEN_ACTIVITY_1");
+        payload.put("priority", "high");
+        payload.put("notification", jNotification);
+
+        //jData.put("picture_url", "http://opsbug.com/static/google-io.jpg");
+        payload.put("data", jData);
+
+        JSONArray tokens = new JSONArray();
+        tokens.put(notification.recipient().token());
+        payload.put("registration_ids", tokens);
+
+        return payload.toString();
     }
 }

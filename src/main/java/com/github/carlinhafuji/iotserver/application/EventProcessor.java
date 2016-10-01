@@ -1,16 +1,17 @@
 package com.github.carlinhafuji.iotserver.application;
 
+import com.github.carlinhafuji.iotserver.domain.Mobile;
+import com.github.carlinhafuji.iotserver.domain.Thing;
+import com.github.carlinhafuji.iotserver.domain.ThingRepository;
+import com.github.carlinhafuji.iotserver.domain.notification.Notification;
+import com.github.carlinhafuji.iotserver.domain.notification.NotificationSender;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.github.carlinhafuji.iotserver.domain.Thing;
-import com.github.carlinhafuji.iotserver.domain.ThingRepository;
-import com.github.carlinhafuji.iotserver.domain.notification.NotificationSender;
 
 @Service
 public class EventProcessor {
@@ -29,28 +30,25 @@ public class EventProcessor {
 
         Thing thing = thingRepository().findOne(eventData.getThingId());
         List<Integer> paramValues = new ArrayList<Integer>();
-
-        System.out.print(thing);
         
         for (Map.Entry<String, String> value: eventData.getParams().entrySet()) {
         	paramValues.add(new Integer(value.getValue()));
         }
         
         Map<String, String> msgs = thingMessage(thing, paramValues);
-        
-        for (Map.Entry<String, String> msg: msgs.entrySet()) {
-        	if(msg.getValue() != null){
-        		System.out.println("Titulo: "+ msg.getKey() + "Mensagem: " + msg.getValue());
-        		//Notification n = new Notification(msg.getKey(),  msg.getValue(), thing.getOwner())
-        	}
-        }        
-        
-        //Notification n = new Notification("titulo", "corpo", thing.getOwner())
-        //notificationSender().send(n);
+
+		thing.owner().mobiles().forEach(mobile ->
+			msgs.forEach((title, body) -> sendEachMessage(title, body, mobile))
+		);
     }
+
+	private void sendEachMessage(String title, String body, Mobile mobile) {
+		System.out.println("Titulo: "+ title + "Mensagem: " + body);
+		notificationSender().send(new Notification(title,  body, mobile));
+	}
     
-    private Map<String,String> thingMessage(Thing thing, List<Integer> paramValues){
-    	Map<String,String> msg = new HashMap<String,String>();
+    private Map<String, String> thingMessage(Thing thing, List<Integer> paramValues){
+    	Map<String, String> msg = new HashMap<String,String>();
     	String title = "";
     	String body = "";
     	
@@ -76,10 +74,10 @@ public class EventProcessor {
     private String processTree(Thing thing, List<Integer> paramValues){
     	Integer paramValue = paramValues.get(0);
     	
-    	if(paramValue < 50 && paramValue > 30){
-    		return "Regar a planta "+thing.name();
-    	}else if(paramValue < 30){
-    		return "Regar a planta "+thing.name() + "urgente";
+    	if (paramValue < 50 && paramValue > 30) {
+    		return "Regar a planta " + thing.name();
+    	} else if (paramValue < 30){
+    		return "Regar a planta " + thing.name() + " urgente";
     	}
     	
     	return null;    	
