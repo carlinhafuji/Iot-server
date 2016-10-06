@@ -18,6 +18,7 @@ public class EventProcessor {
 
     private final ThingRepository thingRepository;
     private final NotificationSender notificationSender;
+    private boolean flagSendMsg = true;
 
     @Autowired
     public EventProcessor(ThingRepository thingRepository, NotificationSender notificationSender) {
@@ -37,9 +38,11 @@ public class EventProcessor {
         
         Map<String, String> msgs = thingMessage(thing, paramValues);
 
-		thing.owner().mobiles().forEach(mobile ->
-			msgs.forEach((title, body) -> sendEachMessage(title, body, mobile))
-		);
+        if(flagSendMsg){
+			thing.owner().mobiles().forEach(mobile ->
+				msgs.forEach((title, body) -> sendEachMessage(title, body, mobile))
+			);
+        }
     }
 
 	private void sendEachMessage(String title, String body, Mobile mobile) {
@@ -80,6 +83,8 @@ public class EventProcessor {
     		return "Regar a planta " + thing.name() + " urgente";
     	}
     	
+    	flagSendMsg = false;
+    	
     	return null;    	
     }
     
@@ -91,6 +96,7 @@ public class EventProcessor {
     	if(paramValues.get(0) == 5) return "Você está esquecendo o celular";
     	if(paramValues.get(0) == 6) return "Você está esquecendo o celular e a carteira";
     	
+    	flagSendMsg = false;
     	return null;   	
     }
 
