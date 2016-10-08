@@ -25,4 +25,24 @@ public class Notification {
     public Mobile recipient() {
         return recipient;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Notification that = (Notification) o;
+
+        if (!title.equals(that.title)) return false;
+        if (!body.equals(that.body)) return false;
+        return recipient.equals(that.recipient);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = title.hashCode();
+        result = 31 * result + body.hashCode();
+        result = 31 * result + recipient.hashCode();
+        return result;
+    }
 }

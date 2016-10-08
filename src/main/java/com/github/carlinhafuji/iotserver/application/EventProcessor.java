@@ -26,8 +26,6 @@ public class EventProcessor {
     }
 
     public void processor(EventData eventData) {
-        System.out.println(eventData.getThingId() + " - " + String.join(", " , eventData.getParams().keySet()));
-
         Thing thing = thingRepository().findOne(eventData.getThingId());
         List<Integer> paramValues = new ArrayList<Integer>();
         
@@ -43,7 +41,6 @@ public class EventProcessor {
     }
 
 	private void sendEachMessage(String title, String body, Mobile mobile) {
-		System.out.println("Titulo: "+ title + "Mensagem: " + body);
 		notificationSender().send(new Notification(title,  body, mobile));
 	}
     

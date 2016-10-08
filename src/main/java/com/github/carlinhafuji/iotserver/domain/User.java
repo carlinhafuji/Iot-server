@@ -1,6 +1,11 @@
 package com.github.carlinhafuji.iotserver.domain;
 
+import org.hibernate.mapping.Collection;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 @Entity(name= "application_user")
@@ -14,15 +19,24 @@ public class User {
     private String email;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
-    private Set<Thing> things;
+    private List<Thing> things;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
-    private Set<Mobile> mobiles;
+    private List<Mobile> mobiles;
 
-    public User() { }
+    public User() {
+        mobiles = new ArrayList<>();
+        things = new ArrayList<>();
+    }
 
     public User(String email) {
+        this();
         this.email = email;
+    }
+
+    public User(Long id, String email) {
+        this(email);
+        this.id = id;
     }
 
     public String email() {
@@ -33,11 +47,11 @@ public class User {
         return id;
     }
 
-    public Set<Thing> things() {
+    public List<Thing> things() {
         return things;
     }
 
-    public Set<Mobile> mobiles() {
+    public List<Mobile> mobiles() {
         return mobiles;
     }
 
