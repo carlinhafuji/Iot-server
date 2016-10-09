@@ -78,7 +78,7 @@ public class EventProcessor {
     	
     	if (paramValue < 50 && paramValue > 30) {
     		return "Regar a planta " + thing.name();
-    	} else if (paramValue < 30){
+    	} else if (paramValue <= 30){
     		return "Regar a planta " + thing.name() + " urgente";
     	}
     	
