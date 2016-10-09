@@ -34,6 +34,8 @@ public class EventProcessor {
         	paramValues.add(new Integer(value.getValue()));
         }
         
+        System.out.println("Param: "+ eventData.getParams());
+        
         Map<String, String> msgs = thingMessage(thing, paramValues);
 
         if(flagSendMsg){
