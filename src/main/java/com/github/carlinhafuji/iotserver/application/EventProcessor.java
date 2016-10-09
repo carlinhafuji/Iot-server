@@ -57,6 +57,7 @@ public class EventProcessor {
     	
     	switch (thing.type()) {
 		case PLANTA:
+			System.out.println("--------PLANTA -----------");
 			title = "Menssagem da Planta";
 			body = processTree(thing, paramValues);
 			break;
@@ -75,6 +76,7 @@ public class EventProcessor {
     }
     
     private String processTree(Thing thing, List<Integer> paramValues){
+    	System.out.println("--------PLANTA FUNCTION-----------");
     	Integer paramValue = paramValues.get(0);
     	
     	if (paramValue < 50 && paramValue > 30) {
