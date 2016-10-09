@@ -27,15 +27,13 @@ public class EventProcessor {
     }
 
     public void processor(EventData eventData) {
-    	System.out.println("ThingId: "+ eventData.getThingId());
-        Thing thing = thingRepository().findOne(eventData.getThingId());
+    	flagSendMsg = true;
+    	Thing thing = thingRepository().findOne(eventData.getThingId());
         List<Integer> paramValues = new ArrayList<Integer>();
         
         for (Map.Entry<String, String> value: eventData.getParams().entrySet()) {
         	paramValues.add(new Integer(value.getValue()));
         }
-        
-        System.out.println("Param: "+ eventData.getParams());
         
         Map<String, String> msgs = thingMessage(thing, paramValues);
 
@@ -58,12 +56,10 @@ public class EventProcessor {
     	System.out.println("TYPE: " + thing.type());
     	switch (thing.type()) {
 		case PLANTA:
-			System.out.println("--------PLANTA -----------");
 			title = "Menssagem da Planta";
 			body = processTree(thing, paramValues);
 			break;
 		case BALANCA:
-			System.out.println("--------BALANCA -----------");
 			break;
 		case CARTEIRA_CHAVE_CARTEIRA:
 			title = "Menssagem da Carteira/Celular/Chave";
@@ -77,7 +73,6 @@ public class EventProcessor {
     }
     
     private String processTree(Thing thing, List<Integer> paramValues){
-    	System.out.println("--------PLANTA FUNCTION-----------");
     	Integer paramValue = paramValues.get(0);
     	
     	if (paramValue < 50 && paramValue > 30) {
