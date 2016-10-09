@@ -27,6 +27,7 @@ public class EventProcessor {
     }
 
     public void processor(EventData eventData) {
+    	System.out.println("ThingId: "+ eventData.getThingId());
         Thing thing = thingRepository().findOne(eventData.getThingId());
         List<Integer> paramValues = new ArrayList<Integer>();
         
