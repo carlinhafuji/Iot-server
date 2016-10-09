@@ -63,7 +63,7 @@ public class EventProcessor {
 			body = processTree(thing, paramValues);
 			break;
 		case BALANCA:
-			
+			System.out.println("--------BALANCA -----------");
 			break;
 		case CARTEIRA_CHAVE_CARTEIRA:
 			title = "Menssagem da Carteira/Celular/Chave";
