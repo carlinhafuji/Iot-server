@@ -39,6 +39,7 @@ public class EventProcessor {
         Map<String, String> msgs = thingMessage(thing, paramValues);
 
         if(flagSendMsg){
+        	System.out.println("Flag: "+ flagSendMsg);
 			thing.owner().mobiles().forEach(mobile ->
 				msgs.forEach((title, body) -> sendEachMessage(title, body, mobile))
 			);
