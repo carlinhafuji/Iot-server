@@ -38,7 +38,6 @@ public class EventProcessor {
         Map<String, String> msgs = thingMessage(thing, paramValues);
 
         if(flagSendMsg){
-        	System.out.println("Flag: "+ flagSendMsg);
 			thing.owner().mobiles().forEach(mobile ->
 				msgs.forEach((title, body) -> sendEachMessage(title, body, mobile))
 			);
@@ -53,7 +52,6 @@ public class EventProcessor {
     	Map<String, String> msg = new HashMap<String,String>();
     	String title = "";
     	String body = "";
-    	System.out.println("TYPE: " + thing.type());
     	switch (thing.type()) {
 		case PLANTA:
 			title = "Menssagem da Planta";
