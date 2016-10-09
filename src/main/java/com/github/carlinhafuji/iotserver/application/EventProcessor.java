@@ -74,8 +74,6 @@ public class EventProcessor {
     private String processTree(Thing thing, List<Integer> paramValues){
     	Integer paramValue = paramValues.get(0);
     	
-    	System.out.println("Planta: " + paramValue);
-    	
     	if (paramValue < 50 && paramValue > 30) {
     		return "Regar a planta " + thing.name();
     	} else if (paramValue < 30){
