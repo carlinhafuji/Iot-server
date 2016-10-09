@@ -54,7 +54,7 @@ public class EventProcessor {
     	Map<String, String> msg = new HashMap<String,String>();
     	String title = "";
     	String body = "";
-    	
+    	System.out.println("TYPE: " + thing.type());
     	switch (thing.type()) {
 		case PLANTA:
 			System.out.println("--------PLANTA -----------");
