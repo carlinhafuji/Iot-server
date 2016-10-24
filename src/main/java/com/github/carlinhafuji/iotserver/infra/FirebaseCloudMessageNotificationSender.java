@@ -36,7 +36,9 @@ public class FirebaseCloudMessageNotificationSender implements NotificationSende
             conn.setDoOutput(true);
 
             OutputStream outputStream = conn.getOutputStream();
-            outputStream.write(getPayload(notification).getBytes());
+            String payload = getPayload(notification);
+            System.out.println("Sending message --> " + payload);
+            outputStream.write(payload.getBytes());
 
             /*TODO Implement ExponencialBackoff*/
             /*TODO Validate if message was sent successfully*/
@@ -55,23 +57,21 @@ public class FirebaseCloudMessageNotificationSender implements NotificationSende
 
     private String getPayload(Notification notification) {
         JSONObject payload = new JSONObject();
-        JSONObject jNotification = new JSONObject();
-        JSONObject jData = new JSONObject();
+        payload.put("priority", "high");
 
+        JSONObject jNotification = new JSONObject();
         jNotification.put("title", notification.title());
         jNotification.put("body", notification.body());
         jNotification.put("sound", "default");
         jNotification.put("badge", "1");
-        jNotification.put("click_action", "OPEN_ACTIVITY_1");
-        payload.put("priority", "high");
         payload.put("notification", jNotification);
-
-        //jData.put("picture_url", "http://opsbug.com/static/google-io.jpg");
-        payload.put("data", jData);
 
         JSONArray tokens = new JSONArray();
         tokens.put(notification.recipient().token());
         payload.put("registration_ids", tokens);
+
+        JSONObject jData = new JSONObject();
+        payload.put("data", jData);
 
         return payload.toString();
     }
