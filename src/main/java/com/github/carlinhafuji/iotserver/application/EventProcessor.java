@@ -39,7 +39,10 @@ public class EventProcessor {
 
         if(flagSendMsg){
 			thing.owner().mobiles().forEach(mobile ->
-				msgs.forEach((title, body) -> sendEachMessage(title, body, mobile))
+				msgs.forEach((title, body) -> {
+					System.out.println("title="+title+" | body="+body);
+					sendEachMessage(title, body, mobile);
+				})
 			);
         }
     }
